@@ -247,8 +247,8 @@ module View = struct
   let task_list m =
     let css_visibility tasks =
       match tasks with
-      | [] -> "visibility: hidden;"
-      | _ -> "visibility: visible;"
+      | [] -> "hidden"
+      | _ -> "visible"
     in
     let toggle_input_checked tasks =
       List.for_all (fun e -> e.Model.completed) tasks
@@ -262,7 +262,7 @@ module View = struct
       in
       List.filter is_visible m.Model.tasks
     in
-    Vdom.(elt "section" ~a:[class_ "main"; str_prop "style" (css_visibility m.Model.tasks)] [
+    Vdom.(elt "section" ~a:[class_ "main"; style "visibility" (css_visibility m.Model.tasks)] [
         elt "input"
           ~a:( (if toggle_input_checked m.Model.tasks then [str_prop "checked" "checked"] else []) @ [
               type_ "checkbox" ;
