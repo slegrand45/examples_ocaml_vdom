@@ -9,7 +9,7 @@ module Storage = struct
   let key = "ocaml-vdom-todo-state"
 
   let find () =
-    Js_browser.Storage.get_item storage key 
+    Js_browser.Storage.get_item storage key
 
   let set v = Js_browser.Storage.set_item storage key v
 
@@ -191,7 +191,7 @@ module View = struct
           let l = [
             str_prop "type" "checkbox" ;
             class_ "toggle" ;
-            onclick (
+            onclick (fun _ ->
               Check (todo.id, (not todo.completed))
             )]
           in if todo.completed then str_prop "checked" "checked" :: l else l
@@ -234,9 +234,9 @@ module View = struct
     Vdom.(elt "li" ~a:[class_ css_class] [
         div ~a:[class_ "view"] [
           input_check;
-          elt "label" ~a:[ondblclick (Editing_task (todo.id, true)) ;
+          elt "label" ~a:[ondblclick (fun _ -> Editing_task (todo.id, true)) ;
                          ] [text todo.description] ;
-          elt "button" ~a:[class_ "destroy"; onclick (
+          elt "button" ~a:[class_ "destroy"; onclick (fun _ ->
               Delete todo.id ;
             ) ] []
         ];
@@ -267,7 +267,7 @@ module View = struct
           ~a:( (if toggle_input_checked m.Model.tasks then [str_prop "checked" "checked"] else []) @ [
               type_ "checkbox" ;
               class_ "toggle-all" ;
-              onclick (Check_all (not (toggle_input_checked m.Model.tasks))) ;
+              onclick (fun _ -> Check_all (not (toggle_input_checked m.Model.tasks))) ;
             ]) [] ;
         (* /!\ need "attr" function for the "label" attribute "for" /!\ *)
         elt "label" ~a:[attr "for" "toggle-all"] [text "Mark all as complete"] ;
@@ -279,7 +279,7 @@ module View = struct
       if visibility = m.Model.visibility then "selected" else ""
     in
     Vdom.(elt "li" [
-        elt "a" ~a:[str_prop "href" uri; class_ css; onclick (
+        elt "a" ~a:[str_prop "href" uri; class_ css; onclick (fun _ ->
             Change_visibility visibility)]
           [text (Model.string_of_visibility visibility)]
       ]) :: acc
@@ -290,7 +290,7 @@ module View = struct
       | [] -> true
       | _ -> false
     in
-    let button = Vdom.([class_ "clear-completed"; onclick (
+    let button = Vdom.([class_ "clear-completed"; onclick (fun _ ->
         Delete_complete
       )]) in
     let button_hidden tasks =
@@ -363,7 +363,7 @@ let app =
   in
   Vdom.simple_app ~init:m ~view:View.view ~update:Controller.update ()
 
-let run () =  
+let run () =
   Vdom_blit.run app
   |> Vdom_blit.dom
   |> Js_browser.Element.append_child (Js_browser.Document.body Js_browser.document)

@@ -2,7 +2,7 @@
 
 # Compile OCaml source file to OCaml bytecode
 ocamlfind ocamlc \
-	-package js_of_ocaml,js_of_ocaml.ppx,ppx_deriving,js_of_ocaml.deriving.ppx,js_of_ocaml.deriving,ocaml-vdom \
+	-package js_of_ocaml,js_of_ocaml.ppx,ppx_deriving,js_of_ocaml-ppx_deriving_json,js_of_ocaml.deriving,ocaml-vdom \
 	-no-check-prims -linkpkg \
 	-o todomvc.byte todomvc.ml
 
