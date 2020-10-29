@@ -185,7 +185,7 @@ module View = struct
       ])
 
   (* One item in the tasks list *)
-  let todo_item m (todo:Model.task) =
+  let todo_item (todo:Model.task) =
     let input_check =
       Vdom.(elt "input" ~a:(
           let l = [
@@ -214,7 +214,7 @@ module View = struct
         Action.Nop
     in
 
-    let input_edit m =
+    let input_edit () =
       Vdom.(input ~a:[
           class_ "edit" ;
           value todo.description ;
@@ -240,7 +240,7 @@ module View = struct
               Delete todo.id ;
             ) ] []
         ];
-        input_edit m;
+        input_edit ();
       ])
 
   (* Build the tasks list *)
@@ -271,7 +271,7 @@ module View = struct
             ]) [] ;
         (* /!\ need "attr" function for the "label" attribute "for" /!\ *)
         elt "label" ~a:[attr "for" "toggle-all"] [text "Mark all as complete"] ;
-        elt "ul" ~a:[class_ "todo-list"] (List.map (todo_item m) (list_of_visible_tasks m))
+        elt "ul" ~a:[class_ "todo-list"] (List.map (todo_item) (list_of_visible_tasks m))
       ])
 
   let visibility_swap m acc (uri, visibility) =
