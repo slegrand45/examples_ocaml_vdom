@@ -9,7 +9,7 @@ module Storage = struct
   let key = "ocaml-vdom-todo-state"
 
   let find () =
-    Js_browser.Storage.get_item storage key 
+    Js_browser.Storage.get_item storage key
 
   let set v = Js_browser.Storage.set_item storage key v
 
@@ -363,7 +363,7 @@ let app =
   in
   Vdom.simple_app ~init:m ~view:View.view ~update:Controller.update ()
 
-let run () =  
+let run () =
   Vdom_blit.run app
   |> Vdom_blit.dom
   |> Js_browser.Element.append_child (Js_browser.Document.body Js_browser.document)
