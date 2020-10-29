@@ -1,9 +1,10 @@
 (executable
  (name todomvc)
- (libraries ocaml-vdom ppx_deriving js_of_ocaml-ppx_deriving_json js_of_ocaml.deriving)
+ (libraries js_of_ocaml ocaml-vdom)
  (preprocess (pps js_of_ocaml-ppx_deriving_json))
  (modes js))
 
 (env
-  (dev
-      (flags (:standard -w -66))))
+ (dev
+  (flags (:standard -w -39))))
+
